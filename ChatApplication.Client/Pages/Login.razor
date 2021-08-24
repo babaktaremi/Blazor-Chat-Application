@@ -1,0 +1,19 @@
+﻿@page "/Login"
+
+<EditForm Model="LoginViewModel" OnValidSubmit="@HandleValidSubmit" class="container bootstrap snippets bootdey" style="padding: 150px">
+    <DataAnnotationsValidator/>
+    <div class="lc-block col-md-4 col-md-offset-4 toggled" id="l-login">
+        <div class="lcb-float"><i class="fa fa-users"></i></div>
+        <div class="form-group">
+            <InputText type="text" class="form-control" placeholder="Username" @bind-Value="@LoginViewModel.UserName"></InputText>
+            <ValidationMessage  For="@(() => LoginViewModel.UserName)" />
+        </div>
+        <div class="form-group">
+            <InputText type="password" class="form-control" placeholder="Password" @bind-Value="@LoginViewModel.Password"></InputText>
+            <ValidationMessage For="@(() => LoginViewModel.Password)" />
+        </div>
+        <div class="clearfix"></div>
+        <button type="submit" class="btn btn-block btn-primary btn-float m-t-25">Sign In</button>
+        <a href="/Register" class="btn btn-block btn-warning btn-float m-t-25">Register</a>
+    </div>
+</EditForm>

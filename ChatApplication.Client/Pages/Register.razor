@@ -1,0 +1,26 @@
+﻿@page "/Register"
+@using ChatApplication.Shared.Account
+
+<EditForm Model="RegisterViewModel" OnValidSubmit="@HandleValidSubmit" class="container bootstrap snippets bootdey" style="padding: 150px">
+    <DataAnnotationsValidator />
+    <div class="lc-block col-md-4 col-md-offset-4 toggled" id="l-login">
+        <div class="lcb-float"><i class="fa fa-users"></i></div>
+        <div class="form-group">
+            <InputText type="text" class="form-control" placeholder="Username" @bind-Value="@RegisterViewModel.UserName"></InputText>
+            <ValidationMessage For="@(() => RegisterViewModel.UserName)" />
+        </div>
+        <div class="form-group">
+            <InputText type="password" class="form-control" placeholder="Password" @bind-Value="@RegisterViewModel.Password"></InputText>
+            <ValidationMessage For="@(() => RegisterViewModel.Password)" />
+        </div>
+        
+        <div class="form-group">
+            <InputText type="password" class="form-control" placeholder="Repeat Password" @bind-Value="@RegisterViewModel.RepeatPassword"></InputText>
+            <ValidationMessage For="@(() => RegisterViewModel.RepeatPassword)" />
+        </div>
+
+        <div class="clearfix"></div>
+        <button type="submit" class="btn btn-block btn-primary btn-float m-t-25">Register</button>
+        <a href="/Login" class="btn btn-block btn-warning btn-float m-t-25">Login</a>
+    </div>
+</EditForm>
