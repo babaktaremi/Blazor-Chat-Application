@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatApplication.Server.Context;
 using ChatApplication.Server.IdentityModels;
 using ChatApplication.Server.IdentityServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChatApplication.Server.Extensions
@@ -14,18 +16,7 @@ namespace ChatApplication.Server.Extensions
     {
         public static void AddCustomIdentity(this IServiceCollection services)
         {
-            services.AddScoped<IUserValidator<User>, AppUserValidator>();
-            services.AddScoped<UserValidator<User>, AppUserValidator>();
-
             services.AddScoped<IUserClaimsPrincipalFactory<User>, AppUserClaimsPrincipleFactory>();
-
-            services.AddScoped<IRoleValidator<Role>, AppRoleValidator>();
-            services.AddScoped<RoleValidator<Role>, AppRoleValidator>();
-
-         
-            services.AddScoped<IRoleStore<Role>, RoleStore>();
-            services.AddScoped<IUserStore<User>, AppUserStore>();
-
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -43,12 +34,7 @@ namespace ChatApplication.Server.Extensions
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 options.Lockout.MaxFailedAccessAttempts = 3;
 
-            }).AddUserStore<AppUserStore>()
-                .AddRoleStore<RoleStore>().
-                AddUserManager<AppUserManager>().
-                AddRoleManager<AppRoleManager>().
-                AddDefaultTokenProviders().
-            AddSignInManager<AppSignInManager>();
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
         }
     }

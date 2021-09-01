@@ -8,10 +8,10 @@ namespace ChatApplication.Server.IdentityServices
 {
     public class AppUserClaimsPrincipleFactory : UserClaimsPrincipalFactory<User, Role>
     {
-        public AppUserClaimsPrincipleFactory(AppUserManager userManager, AppRoleManager roleManager, IOptions<IdentityOptions> options) : base(userManager, roleManager, options)
+
+        public AppUserClaimsPrincipleFactory(UserManager<User> userManager, RoleManager<Role> roleManager, IOptions<IdentityOptions> options) : base(userManager, roleManager, options)
         {
         }
-
 
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
         {
@@ -19,16 +19,12 @@ namespace ChatApplication.Server.IdentityServices
 
             var claimsIdentity = await base.GenerateClaimsAsync(user);
             claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(), ClaimValueTypes.Integer));
-            //claimsIdentity.AddClaim(new Claim(ClaimTypes.Email,user?.Email));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            // claimsIdentity.AddClaim(new Claim(ClaimTypes.MobilePhone,user.PhoneNumber));
 
             foreach (var roles in userRoles)
             {
                 claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roles));
             }
-
-            //claimsIdentity.AddClaim(new Claim(ClaimTypes.Role,RoleManager.GetRoleNameAsync(user.Roles)));
 
 
             return claimsIdentity;

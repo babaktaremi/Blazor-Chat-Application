@@ -7,6 +7,7 @@ using ChatApplication.Server.IdentityModels;
 using ChatApplication.Server.IdentityServices;
 using ChatApplication.Server.Service.Jwt;
 using ChatApplication.Shared.Account;
+using Microsoft.AspNetCore.Identity;
 
 namespace ChatApplication.Server.Controllers
 {
@@ -14,10 +15,10 @@ namespace ChatApplication.Server.Controllers
     [Route("Api/Account")]
     public class AccountController : ControllerBase
     {
-        private readonly AppUserManager _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IJwtService _jwtService;
 
-        public AccountController(AppUserManager userManager, IJwtService jwtService)
+        public AccountController(UserManager<User> userManager, IJwtService jwtService)
         {
             _userManager = userManager;
             _jwtService = jwtService;
